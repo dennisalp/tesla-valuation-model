@@ -87,6 +87,7 @@ def main():
     ax.set_ylabel(col)
     ax.grid()
     ax.set_xlim((df.date.min(), ftr.date.max()))
+    plt.savefig(dt.today().strftime('%Y-%m-%d') + '.pdf', bbox_inches='tight')
 
     fig = plt.figure(figsize=(5,5))
     plt.scatter(cagr[pp[2]], cagr[pp[3]], s=1)
