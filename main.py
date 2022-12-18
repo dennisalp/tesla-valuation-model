@@ -136,10 +136,11 @@ cagr = {}
 cagr[pp[0]] = 1 + lognorm(.42, .12)
 cagr[pp[1]] = 1 + lognorm(.07, .30)
 
-cov = np.array([[.1, .09],[.09, .1]])
-tmp = np.exp(np.random.multivariate_normal([np.log(0.1), np.log(0.03)], np.log(cov+1), size=nn))
+cov = np.array([[.2, 0.3],[0.3, 0.5]])
+tmp = np.exp(np.random.multivariate_normal([np.log(0.07), np.log(0.06)], np.log(cov+1), size=nn))
 cagr[pp[2]] = 1 - tmp[:,0]
 cagr[pp[3]] = 1 - tmp[:,1]
+cagr[pp[3]] = np.where(cagr[pp[3]]<0.3, 0.3, cagr[pp[3]])
 
 pe = lognorm(30, .2)
 
