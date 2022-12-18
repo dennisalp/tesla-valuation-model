@@ -58,7 +58,7 @@ def main():
     cc = cc.reshape((2, len(pp)))
     
     fig, axs = plt.subplots(2, 5, figsize=(22,16))
-    plt.subplots_adjust(bottom=0.01, right=0.99, top=0.95, left=0.04)
+    plt.subplots_adjust(bottom=0.01, right=0.99, top=0.95, left=0.04, wspace=0.25, hspace=0.25)
 
     for ii, pi in enumerate(pp):
         plt_ts(df, axs, 0, ii, pi, cc)
