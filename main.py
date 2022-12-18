@@ -89,7 +89,7 @@ def main():
     ax.grid()
     ax.set_xlim((df.date.min(), ftr.date.max()))
 
-    out = os.path.join('out', dt.today().strftime('%Y-%m-%d') + '.pdf')
+    out = os.path.join('out', dt.today().strftime('%Y-%m-%d') + '.png')
     plt.savefig(out, bbox_inches='tight')
 
     fig = plt.figure(figsize=(5,5))
