@@ -97,9 +97,6 @@ def main():
     plt.xlabel('cagr_'+pp[2])
     plt.ylabel('cagr_'+pp[3])
     plt.grid()
-    plt.show()
-    st()
-
 
 
 
@@ -110,18 +107,96 @@ yrs = 5
 pp = ['prod', 'opex', 'cogs', 'asp']
 
 df = {
-    'date': [dt(2021,4,2), dt(2021,7,1), dt(2021,10,1), dt(2022,1,1), dt(2022,4,1), dt(2022,7,1), dt(2022,10,1), dt(2023,1,1), dt(2023,4,1), dt(2023,7,1), dt(2023,10,1)],
+    'date': [
+        dt(2021,4,2), # Leave this as April 2nd and not April 1st. Pandas will format the date differently for the x-axis otherwise.
+        dt(2021,7,1),
+        dt(2021,10,1),
+        dt(2022,1,1),
+        dt(2022,4,1),
+        dt(2022,7,1),
+        dt(2022,10,1),
+        dt(2023,1,1),
+        dt(2023,4,1),
+        dt(2023,7,1),
+        dt(2023,10,1),
+        dt(2024,1,1),
+    ],
     # Total production
-    pp[0]: [180338, 206421, 237823, 305840, 305407, 258580, 365923, 439701, 440808, 479700, 430488],
+    pp[0]: [
+        180338,
+        206421,
+        237823,
+        305840,
+        305407,
+        258580,
+        365923,
+        439701,
+        440808,
+        479700,
+        430488,
+        494989,
+    ],
     # Operating expenses
-    pp[1]: np.array([ 1.621, 1.572, 1.656,  1.894,  1.857,  1.770,  1.694, 1.876, 1.847, 2.134, 2.414])*1e9,
+    pp[1]: np.array([
+        1.621,
+        1.572,
+        1.656,
+        1.894,
+        1.857,
+        1.770,
+        1.694,
+        1.876,
+        1.847,
+        2.134,
+        2.414,
+        2.374,
+    ])*1e9,
     # Cost of revenues - Automotive sales
-    pp[2]: np.array([ 6.617, 7.307, 8.150, 10.689, 10.914, 10.153, 13.099, 15.433, 15.422, 16.841, 15.656])*1e9,
+    pp[2]: np.array([
+         6.617,
+         7.307,
+         8.150,
+        10.689,
+        10.914,
+        10.153,
+        13.099,
+        15.433,
+        15.422,
+        16.841,
+        15.656,
+        17.202,
+    ])*1e9,
     # Revenues - Automotive sales
-    pp[3]: np.array([ 8.705, 9.874, 11.393, 15.025, 15.514, 13.670, 17.785, 20.241, 18.878, 20.419, 18.582])*1e9,
-    # Market cap - At end of quarter
-    'mcap': np.array([650, 670, 770, 1050, 1100, 720, 800, 480, 644, 827, 780])*1e9
-    }
+    pp[3]: np.array([
+         8.705,
+         9.874,
+        11.393,
+        15.025,
+        15.514,
+        13.670,
+        17.785,
+        20.241,
+        18.878,
+        20.419,
+        18.582,
+        20.630,
+    ])*1e9,
+    # Market cap - Day after earnings
+    'mcap': np.array([
+        234.91,
+        214.93,
+        341.62,
+        276.37,
+        336.26,
+        271.71,
+        207.28,
+        177.9,
+        162.99,
+        262.9,
+        220.11,
+        182.63,
+    ])*3178921391
+}
 
 df = pd.DataFrame(df)
 df.cogs /= df['prod']
@@ -131,16 +206,16 @@ df['time'] = (df.date - dt.today()).dt.days / diny
 ftr = {
     'date': dt.today() + np.arange(0, yrs*4+1)*td(days=diny/4),
     'time': np.arange(0, yrs*4+1) / 4
-    }
+}
 ftr = pd.DataFrame(ftr)
 
 sim = np.empty((len(pp), ftr.shape[0], nn))
 
 cagr = {}
-cagr[pp[0]] = 1 + lognorm(.42, .12)
-cagr[pp[1]] = 1 + lognorm(.07, .30)
+cagr[pp[0]] = 1 + lognorm(.20, .12)  # CAGR Production
+cagr[pp[1]] = 1 + lognorm(.06, .30)  # CAGR OPEX
 
-cov = np.array([[.2, 0.3],[0.3, 0.5]])
+cov = np.array([[.2, 0.3],[0.3, 0.5]])  # CAGR Automotive COGS/ASP
 tmp = np.exp(np.random.multivariate_normal([np.log(0.07), np.log(0.06)], np.log(cov+1), size=nn))
 cagr[pp[2]] = 1 - tmp[:,0]
 cagr[pp[3]] = 1 - tmp[:,1]
