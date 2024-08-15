@@ -121,6 +121,7 @@ df = {
         dt(2023,10,1),
         dt(2024,1,1),
         dt(2024,4,1),
+        dt(2024,7,1),
     ],
     # Total production
     pp[0]: [
@@ -137,6 +138,7 @@ df = {
         430488,
         494989,
         433371,
+        410831,
     ],
     # Operating expenses
     pp[1]: np.array([
@@ -153,6 +155,7 @@ df = {
         2.414,
         2.374,
         2.525,
+        2.973,
     ])*1e9,
     # Cost of revenues - Automotive sales
     pp[2]: np.array([
@@ -169,6 +172,7 @@ df = {
         15.656,
         17.202,
         13.897,
+        15.962,
     ])*1e9,
     # Revenues - Automotive sales
     pp[3]: np.array([
@@ -185,6 +189,7 @@ df = {
         18.582,
         20.630,
         16.460,
+        18.530,
     ])*1e9,
     # Market cap - Day after earnings
     'mcap': np.array([
@@ -201,6 +206,7 @@ df = {
         220.11,
         182.63,
         162.13,
+        215.99,
     ])*3178921391
 }
 
